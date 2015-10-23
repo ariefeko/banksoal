@@ -6,5 +6,14 @@
         <tr><td>Pilihan D</td><td>{!! Form::text('pilihan_d',null,['class'=>'form-control']) !!}</td></tr>
         <tr><td>Pilihan E</td><td>{!! Form::text('pilihan_e',null,['class'=>'form-control']) !!}</td></tr>
         <tr><td>Jawaban</td><td>{!! Form::text('jawaban',null,['class'=>'form-control']) !!}</td></tr>
-        <tr><td>User Created</td><td>{!! Form::text('user_created',null,['class'=>'form-control','disabled']) !!}</td></tr>
-        <tr><td>Gambar</td><td>{!! Form::file('gambar', null, ['class'=>'form-control']) !!}</td></tr>
+        <tr><td>User Created</td><td>{!! Form::text('user_created',null,['class'=>'form-control','enabled']) !!}</td></tr>
+        <tr><td>Gambar</td><td>
+        @if ($soal->gambar)
+                <?php $url = asset('gambar/'.$soal->gambar); ?>
+                <img src="{{ asset('gambar/'.$soal->gambar) }}" width="300"> {!! Form::file($url) !!}
+        @else
+                <img src="{{ asset('gambar/'.'No_image_available.jpg') }}" width="300"> {!! Form::file('gambar', 'dua', ['class'=>'form-control']) !!}
+        @endif
+        </td></tr>
+
+        {{-- <tr><td>Gambar</td><td><span>{!! ($soal->gambar) ? Html::image('/gambar/'.$soal->gambar,null,array('width' => '200')) : Html::image(asset('gambar/No_image_available.jpg'),null,array('width'=>'100')) !!}</span> <span>{!! Form::file('gambar', null, ['class'=>'form-control']) !!}</span></td></tr> --}}

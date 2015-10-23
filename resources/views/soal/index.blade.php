@@ -29,7 +29,7 @@
                     <td>{{ $n->pilihan_d }}</td>
                     <td>{{ $n->pilihan_e }}</td>
                     <td>{{ $n->jawaban }}</td>
-                    <td>{{ $n->gambar }}</td>
+                    <td>{!! ($n->gambar) ? Html::image('/gambar/'.$n->gambar,null,array('width' => '100')) : Html::image(asset('gambar/No_image_available.jpg'),null,array('width'=>'100')) !!}</td>
                     <td>{{ $n->user_created }}</td>
                     <td width="204">{!! Form::open(array('method'=>'delete','url'=>'admin/soal/' . $n->id)) !!}
                         {!! link_to('admin/soal/'.$n->id,'Detail',['class'=>'btn btn-primary']) !!}

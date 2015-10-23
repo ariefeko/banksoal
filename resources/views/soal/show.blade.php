@@ -11,7 +11,7 @@
             <tr><th>Pilihan D</th><td>{{ $soal->pilihan_d }}</td></tr>
             <tr><th>Pilihan E</th><td>{{ $soal->pilihan_e }}</td></tr>
             <tr><th>Jawaban</th><td>{{ $soal->jawaban }}</td></tr>
-            <tr><th>Gambar</th><td>{{ $soal->gambar }}</td></tr>
+            <tr><th>Gambar</th><td><a href="{{ asset('gambar/'.$soal->gambar) }}" target="blank"><img src="{{ asset('gambar/'.$soal->gambar) }}" width="500"></a></td></tr>
             <tr><th>User Created</th><td>{{ $soal->user_created }}</td></tr>
         </table>
         {!! link_to('admin/soal', 'Kembali', ['class'=>'btn btn-primary']) !!}
