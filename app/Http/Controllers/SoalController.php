@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Soal;
+use Input;
 
 class SoalController extends Controller
 {
@@ -15,7 +17,8 @@ class SoalController extends Controller
      */
     public function index()
     {
-        return view('soal.index');
+        $data['soal'] = Soal::all();
+        return view('soal.index', $data);
     }
 
     /**
@@ -25,7 +28,7 @@ class SoalController extends Controller
      */
     public function create()
     {
-        //
+        return view('soal.create');
     }
 
     /**
@@ -36,7 +39,10 @@ class SoalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $filename = Input::file('gambar')->getClientOriginalName();
+        Input::file('gambar')->move(public_path().'/gambar/',$filename);
+        Soal::create(Input::all());
+        return redirect('admin/soal/');
     }
 
     /**
@@ -47,7 +53,11 @@ class SoalController extends Controller
      */
     public function show($id)
     {
-        //
+        $soal = \DB::table('soal')->where('soal.id','=',$id)->get();
+
+        $data['soal'] = $soal;
+        $data['soal'] = Soal::find($id);
+        return view('soal.show',$data);
     }
 
     /**
@@ -58,7 +68,8 @@ class SoalController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['soal'] = Soal::find($id);
+        return view('soal.edit',$data);
     }
 
     /**
@@ -70,7 +81,20 @@ class SoalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $soal = Soal::find($id);
+
+        if($soal->gambar){
+            $file = $soal->gambar;
+            \File::delete(public_path('gambar/' . $file));
+        }
+
+        $filename = Input::file('gambar')->getClientOriginalName();
+        $path = public_path('gambar/' . $filename);
+        Input::file('gambar')->move(public_path().'/gambar/', $filename);
+        $soal->gambar = $filename;
+        $soal->save();
+        $soal = Soal::find($id)->update(Input::except('gambar'));
+        return redirect('admin/soal/' . $id);
     }
 
     /**
@@ -81,6 +105,8 @@ class SoalController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $soal = Soal::find($id);
+        $soal->delete();
+        return redirect('admin/soal');
     }
 }

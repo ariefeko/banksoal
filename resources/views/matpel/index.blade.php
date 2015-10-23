@@ -24,7 +24,8 @@
                         {!! link_to('admin/matpel/'.$n->id.'/edit','Edit',['class'=>'btn btn-primary']) !!}
                         {!! Form::submit('Delete',['class'=>'btn btn-danger']) !!}
                         {!! Form::hidden('_delete', 'Delete') !!}
-                        {!! Form::close() !!}</td>
+                        {!! Form::close() !!}
+                    </td>
                 </tr>
             @endforeach
         </table>
