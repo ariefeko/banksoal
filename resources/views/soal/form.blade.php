@@ -1,5 +1,10 @@
+        <script type="text/javascript">
+                tinymce.init({
+                    selector: "#mytextarea"
+                });
+        </script>
         <tr><td width="200">ID Mata Pelajaran</td><td>{!! Form::text('mata_pelajaran_id',null,['class'=>'form-control']) !!}</td></tr>
-        <tr><td>Pertanyaan</td><td>{!! Form::text('pertanyaan',null,['class'=>'form-control']) !!}</td></tr>
+        <tr><td>Pertanyaan</td><td>{!! Form::textarea('pertanyaan',null,['id'=>'mytextarea','class'=>'form-control']) !!}</td><td></td></tr>
         <tr><td>Pilihan A</td><td>{!! Form::text('pilihan_a',null,['class'=>'form-control']) !!}</td></tr>
         <tr><td>Pilihan B</td><td>{!! Form::text('pilihan_b',null,['class'=>'form-control']) !!}</td></tr>
         <tr><td>Pilihan C</td><td>{!! Form::text('pilihan_c',null,['class'=>'form-control']) !!}</td></tr>

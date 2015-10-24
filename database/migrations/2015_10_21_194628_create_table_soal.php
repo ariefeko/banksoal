@@ -15,7 +15,7 @@ class CreateTableSoal extends Migration
         Schema::create('soal', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('mata_pelajaran_id');
-            $table->string('pertanyaan');
+            $table->text('pertanyaan');
             $table->string('pilihan_a');
             $table->string('pilihan_b');
             $table->string('pilihan_c');

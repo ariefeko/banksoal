@@ -11,7 +11,8 @@
     <link rel="icon" href="../../favicon.ico">
 
     <title>Bank Soal</title>
-
+    <script src="{{ asset('/js/jquery/1.11.3/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Bootstrap theme -->
@@ -64,7 +65,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{{ asset('/js/jquery/1.11.3/jquery.min.js') }}"></script>
     <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/js/docs.min.js') }}"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
