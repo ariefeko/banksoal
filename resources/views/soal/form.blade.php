@@ -8,11 +8,16 @@
         <tr><td>Jawaban</td><td>{!! Form::text('jawaban',null,['class'=>'form-control']) !!}</td></tr>
         <tr><td>User Created</td><td>{!! Form::text('user_created',null,['class'=>'form-control','enabled']) !!}</td></tr>
         <tr><td>Gambar</td><td>
-        @if ($soal->gambar)
-                <?php $url = asset('gambar/'.$soal->gambar); ?>
-                <img src="{{ asset('gambar/'.$soal->gambar) }}" width="300"> {!! Form::file($url) !!}
+        @if (isset($soal))
+                @if (!empty($soal->gambar))
+                        <?php $url = asset('gambar/'.$soal->gambar); ?>
+                        <img src="{{ asset('gambar/'.$soal->gambar) }}" width="300">
+                @else
+                        <img src="{{ asset('gambar/'.'No_image_available.jpg') }}" width="300">
+                @endif
+                {!! Form::file('gambar', null, ['class'=>'form-control']) !!}
         @else
-                <img src="{{ asset('gambar/'.'No_image_available.jpg') }}" width="300"> {!! Form::file('gambar', 'dua', ['class'=>'form-control']) !!}
+                {!! Form::file('gambar', null, ['class'=>'form-control']) !!}
         @endif
         </td></tr>
 

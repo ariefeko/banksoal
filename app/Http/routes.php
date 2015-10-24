@@ -11,3 +11,28 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::get('admin', function() { return view('admin'); });
 Route::resource('admin/soal', 'SoalController');
 Route::resource('admin/matpel', 'MatapelajaranController');
+
+// API mata pelajaran
+Route::get('api/matpel/getall','MatapelajaranController@getAll');
+Route::get('api/matpel/getbyid','MatapelajaranController@getId');
+Route::get('api/matpel/getbyjenjang/{jenjang}','MatapelajaranController@getJenjang');
+Route::get('api/matpel/getbypelajaran/{pelajaran}','MatapelajaranController@getPelajaran');
+Route::get('api/matpel/getbytahunajaran/{thnajaran}','MatapelajaranController@getTahunAjaran');
+
+// API soal
+Route::get('api/soal/getbyid','SoalController@getId');
+Route::get('api/soal/getbymatpelid/{matpelid}','SoalController@getMatpelId');
+Route::get('api/soal/getbyjenjang/{jenjang}','SoalController@getJenjang');
+Route::get('api/soal/getbypelajaran/{pelajaran}','SoalController@getPelajaran');
+
+// API CRUD mata pelajaran
+Route::get('api/matpel/create','MatapelajaranController@tambah');
+Route::get('api/matpel/read/{id}','MatapelajaranController@baca');
+Route::get('api/matpel/update/{id}','MatapelajaranController@ubah');
+Route::get('api/matpel/delete/{id}','MatapelajaranController@hapus');
+
+// API CRUP soal
+Route::get('api/soal/create','SoalController@tambah');
+Route::get('api/soal/read/{id}','SoalController@baca');
+Route::get('api/soal/update/{id}','SoalController@ubah');
+Route::get('api/soal/delete/{id}','SoalController@hapus');

@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Matapelajaran;
 use Input;
+use Response;
 
 class MatapelajaranController extends Controller
 {
@@ -54,8 +55,6 @@ class MatapelajaranController extends Controller
     {
         $matapelajaran = \DB::table('matapelajaran')->where('matapelajaran.id','=',$id)->get();
         $data['matapelajaran'] = Matapelajaran::find($id);
-        // var_dump($data);
-        // die;
         return view('matpel.show',$data);
     }
 
@@ -95,5 +94,103 @@ class MatapelajaranController extends Controller
         $matapelajaran = Matapelajaran::find($id);
         $matapelajaran->delete();
         return redirect('admin/matpel');
+    }
+
+
+    /**
+    * Create get API Mata Pelajaran
+    */
+    public function getAll()
+    {
+        $data = Matapelajaran::all();
+        return Response::json($data,200);
+    }
+
+    public function getId($id)
+    {
+        $data = Matapelajaran::find($id);
+        if(is_null($data))
+        {
+             return Response::json("not found",404);
+        }
+       return Response::json($data,200);
+    }
+
+    public function getJenjang($jenjang)
+    {
+        $data = Matapelajaran::where('jenjang','=',$jenjang)->get();
+        if(is_null($data))
+        {
+             return Response::json("not found",404);
+        }
+        return Response::json($data,200);
+    }
+
+    public function getPelajaran($pelajaran)
+    {
+        $data = Matapelajaran::where('pelajaran','=',$pelajaran)->get();
+        if(is_null($data))
+        {
+             return Response::json("not found",404);
+        }
+        return Response::json($data,200);
+    }
+
+    public function getTahunAjaran($thnajaran)
+    {
+        $data = Matapelajaran::where('tahun_ajaran','=',$thnajaran)->get();
+        if(is_null($data))
+        {
+             return Response::json("not found",404);
+        }
+        return Response::json($data,200);
+    }
+
+
+    /**
+    * Create CRUD API mata pelajaran
+    */
+    public function tambah(Request $request)
+    {
+        $data = $request->all();
+        $success = Matapelajaran::create($data);
+
+        if(!$success)
+        {
+            return Response::json("error saving",500);
+        }
+            return Response::json("success",201);
+    }
+
+    public function baca($id)
+    {
+        $data = Matapelajaran::find($id);
+        if(is_null($data))
+        {
+             return Response::json("not found",404);
+        }
+
+        return Response::json($data,200);
+    }
+
+    public function ubah($id)
+    {
+        $success = Matapelajaran::find($id)->update(Input::all());
+        if(!$success)
+        {
+            return Response::json("error updating",500);
+        }
+        return Response::json("success",201);
+    }
+
+    public function hapus($id)
+    {
+        $matapelajaran = Matapelajaran::find($id);
+        $success = $matapelajaran->delete();
+        if(!$success)
+        {
+            return Response::json("error deleting",500);
+        }
+        return Response::json("success",200);
     }
 }

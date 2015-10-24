@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Soal;
+use App\Matapelajaran;
 use Input;
+use Response;
 
 class SoalController extends Controller
 {
@@ -41,7 +43,19 @@ class SoalController extends Controller
     {
         $filename = Input::file('gambar')->getClientOriginalName();
         Input::file('gambar')->move(public_path().'/gambar/',$filename);
-        Soal::create(Input::all());
+        $data = $request->all();
+        $data = array(
+            'mata_pelajaran_id' => Input::get('mata_pelajaran_id'),
+            'pertanyaan' => Input::get('pertanyaan'),
+            'pilihan_a' => Input::get('pilihan_a'),
+            'pilihan_b' => Input::get('pilihan_b'),
+            'pilihan_c' => Input::get('pilihan_c'),
+            'pilihan_d' => Input::get('pilihan_d'),
+            'pilihan_e' => Input::get('pilihan_e'),
+            'jawaban' => Input::get('jawaban'),
+            'gambar' => $filename,
+            'user_created' => Input::get('user_created'));
+        Soal::create($data);
         return redirect('admin/soal/');
     }
 
@@ -109,4 +123,117 @@ class SoalController extends Controller
         $soal->delete();
         return redirect('admin/soal');
     }
+
+
+    /**
+    * Create get API Soal
+    */
+    public function getId()
+    {
+        $data = Soal::find($id);
+        if(is_null($data))
+        {
+             return Response::json("not found",404);
+        }
+       return Response::json($data,200);
+    }
+
+    public function getMatpelId($matpelid)
+    {
+        $data = Soal::where('mata_pelajaran_id','=',$matpelid)->get();
+        if(is_null($data))
+        {
+             return Response::json("not found",404);
+        }
+        return Response::json($data,200);
+    }
+
+    public function getJenjang($jenjang)
+    {
+        $data = Matapelajaran::where('jenjang','=',$jenjang)->get();
+        foreach ($data as $n) {
+        $matpelsoal = \DB::table('matapelajaran')
+                    ->join('soal','soal.mata_pelajaran_id','=','matapelajaran.id')
+                    ->where('matapelajaran.jenjang','=',$n->jenjang)
+                    ->select('matapelajaran.id', 'matapelajaran.jenjang', 'matapelajaran.pelajaran', 'matapelajaran.tahun_ajaran', 'soal.pertanyaan','soal.jawaban','soal.gambar','soal.user_created')
+                    ->get();
+        }
+        $data['matpelsoal'] = $matpelsoal;
+        //dd($data['matpelsoal']);
+        //die;
+        if(is_null($data))
+        {
+             return Response::json("not found",404);
+        }
+        return Response::json($data['matpelsoal'],200);
+    }
+
+    public function getPelajaran($pelajaran)
+    {
+        $data = Matapelajaran::where('pelajaran','=',$pelajaran)->get();
+        foreach ($data as $n) {
+        $matpelsoal = \DB::table('matapelajaran')
+                    ->join('soal','soal.mata_pelajaran_id','=','matapelajaran.id')
+                    ->where('matapelajaran.pelajaran','=',$n->pelajaran)
+                    ->select('matapelajaran.id', 'matapelajaran.jenjang', 'matapelajaran.pelajaran', 'matapelajaran.tahun_ajaran', 'soal.pertanyaan','soal.jawaban','soal.gambar','soal.user_created')
+                    ->get();
+        }
+        $data['matpelsoal'] = $matpelsoal;
+        if(is_null($data))
+        {
+             return Response::json("not found",404);
+        }
+        return Response::json($data['matpelsoal'],200);
+    }
+
+
+    /**
+    * Create CRUD API soal
+    */
+    public function tambah(Request $request)
+    {
+        $filename = Input::file('gambar')->getClientOriginalName();
+        Input::file('gambar')->move(public_path().'/gambar/',$filename);
+        $data = $request->all();
+        $data = array(
+            'mata_pelajaran_id' => Input::get('mata_pelajaran_id'),
+            'pertanyaan' => Input::get('pertanyaan'),
+            'pilihan_a' => Input::get('pilihan_a'),
+            'pilihan_b' => Input::get('pilihan_b'),
+            'pilihan_c' => Input::get('pilihan_c'),
+            'pilihan_d' => Input::get('pilihan_d'),
+            'pilihan_e' => Input::get('pilihan_e'),
+            'jawaban' => Input::get('jawaban'),
+            'gambar' => $filename,
+            'user_created' => Input::get('user_created'));
+        $success = Soal::create($data);
+
+        if(!$success)
+        {
+            return Response::json("error saving",500);
+        }
+            return Response::json("success",201);
+    }
+
+    public function baca($id)
+    {
+
+    }
+
+    public function ubah($id)
+    {
+
+    }
+
+    public function hapus($id)
+    {
+        $soal = Soal::find($id);
+        $success = $soal->delete();
+        if(!$success)
+        {
+            return Response::json("error deleting",500);
+        }
+        return Response::json("success",200);
+    }
+
 }
