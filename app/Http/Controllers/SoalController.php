@@ -212,17 +212,35 @@ class SoalController extends Controller
         {
             return Response::json("error saving",500);
         }
-            return Response::json("success",201);
+        return Response::json("success",201);
     }
 
     public function baca($id)
     {
+        $success = Soal::find($id);
+        if(is_null($success))
+        {
+             return Response::json("not found",404);
+        }
 
+        return Response::json($success,200);
     }
 
     public function ubah($id)
     {
+        $soal = Soal::find($id);
 
+        $filename = Input::file('gambar')->getClientOriginalName();
+        $path = public_path('gambar/' . $filename);
+        Input::file('gambar')->move(public_path().'/gambar/', $filename);
+        $soal->gambar = $filename;
+        $soal->save();
+        $soal = Soal::find($id)->update(Input::except('gambar'));
+        if(!$soal)
+        {
+            return Response::json("error updating",500);
+        }
+        return Response::json("success",201);
     }
 
     public function hapus($id)

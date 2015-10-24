@@ -9,6 +9,7 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::get('admin', function() { return view('admin'); });
+Route::get('home', function() { return view('admin'); });
 Route::resource('admin/soal', 'SoalController');
 Route::resource('admin/matpel', 'MatapelajaranController');
 
