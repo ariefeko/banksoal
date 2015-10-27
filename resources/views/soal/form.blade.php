@@ -18,7 +18,8 @@
         <tr><td>Pilihan D</td><td>{!! Form::text('pilihan_d',null,['class'=>'form-control']) !!}</td></tr>
         <tr><td>Pilihan E</td><td>{!! Form::text('pilihan_e',null,['class'=>'form-control']) !!}</td></tr>
         <tr><td>Jawaban</td><td>{!! Form::text('jawaban',null,['class'=>'form-control']) !!}</td></tr>
-        <tr><td>User Created</td><td>{!! Form::text('user_created',null,['class'=>'form-control','enabled']) !!}</td></tr>
+        @if (isset($soal)) <?php $nama = $soal->user_created; ?> @else <?php $nama=Auth::user()->name; ?> @endif
+        <tr><td>User Created</td><td>{!! Form::text('user_created',$nama,['class'=>'form-control','enabled']) !!}</td></tr>
         <tr><td>Gambar</td><td>
         @if (isset($soal))
                 @if (!empty($soal->gambar))
