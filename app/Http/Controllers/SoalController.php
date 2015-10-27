@@ -20,7 +20,7 @@ class SoalController extends Controller
      */
     public function index()
     {
-        $data['soal'] = Soal::all();
+        $data['soal'] = Soal::paginate(10);
         return view('soal.index', $data);
     }
 

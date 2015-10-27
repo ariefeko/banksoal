@@ -18,7 +18,7 @@ class MatapelajaranController extends Controller
      */
     public function index()
     {
-        $data['matapelajaran'] = Matapelajaran::all();
+        $data['matapelajaran'] = Matapelajaran::paginate(10);
         return view('matpel.index',$data);
     }
 
