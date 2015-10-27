@@ -8,13 +8,17 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-Route::get('admin', function() { return view('admin'); });
-Route::get('home', function() { return view('admin'); });
-Route::resource('admin/soal', 'SoalController');
-Route::resource('admin/matpel', 'MatapelajaranController');
+Route::group(array('before' => 'auth'), function(){
+    Route::get('admin', function() { return view('admin'); });
+    Route::get('home', function() { return view('admin'); });
+    Route::resource('admin/soal', 'SoalController');
+    Route::resource('admin/matpel', 'MatapelajaranController');
+});
 
-//--tambahan di input data soal, mohon dibuatkan pilihan combobox pada bagian mata pelajaran
-//--(bukan diisi id-nya lewat text-box)
+Route::filter('auth', function()
+{
+    if (Auth::guest()) return Redirect::to('auth/login');
+});
 
 // API mata pelajaran
 Route::get('api/matpel/getall','MatapelajaranController@getAll');
