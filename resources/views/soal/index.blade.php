@@ -45,4 +45,5 @@
                 </tr>
             @endforeach
         </table>
+        {!! $soal->render() !!}
     @stop
