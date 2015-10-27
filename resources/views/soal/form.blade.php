@@ -1,10 +1,17 @@
         <script type="text/javascript">
-                tinymce.init({
-                    selector: "#mytextarea"
-                });
+            var data = <?php echo json_encode($listmatpel); ?>;
+            $(document).ready(function() {
+              $("#listmatapelajaran").select2({
+                data: data
+              })
+            });
         </script>
-        <tr><td width="200">ID Mata Pelajaran</td><td>{!! Form::text('mata_pelajaran_id',null,['class'=>'form-control']) !!}</td></tr>
-        <tr><td>Pertanyaan</td><td>{!! Form::textarea('pertanyaan',null,['id'=>'mytextarea','class'=>'form-control']) !!}</td><td></td></tr>
+        <tr>
+            <td width="200">ID Mata Pelajaran</td><td>
+                {!! Form::select('mata_pelajaran_id',$listmatpel,null,['id'=>'listmatapelajaran','class'=>'form-control']) !!}
+            </td>
+        </tr>
+        <tr><td>Pertanyaan</td><td>{!! Form::textarea('pertanyaan',null,['id'=>'mytextarea','class'=>'form-control']) !!}</td></tr>
         <tr><td>Pilihan A</td><td>{!! Form::text('pilihan_a',null,['class'=>'form-control']) !!}</td></tr>
         <tr><td>Pilihan B</td><td>{!! Form::text('pilihan_b',null,['class'=>'form-control']) !!}</td></tr>
         <tr><td>Pilihan C</td><td>{!! Form::text('pilihan_c',null,['class'=>'form-control']) !!}</td></tr>
@@ -25,5 +32,3 @@
                 {!! Form::file('gambar', null, ['class'=>'form-control']) !!}
         @endif
         </td></tr>
-
-        {{-- <tr><td>Gambar</td><td><span>{!! ($soal->gambar) ? Html::image('/gambar/'.$soal->gambar,null,array('width' => '200')) : Html::image(asset('gambar/No_image_available.jpg'),null,array('width'=>'100')) !!}</span> <span>{!! Form::file('gambar', null, ['class'=>'form-control']) !!}</span></td></tr> --}}

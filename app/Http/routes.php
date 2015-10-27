@@ -13,15 +13,18 @@ Route::get('home', function() { return view('admin'); });
 Route::resource('admin/soal', 'SoalController');
 Route::resource('admin/matpel', 'MatapelajaranController');
 
+//--tambahan di input data soal, mohon dibuatkan pilihan combobox pada bagian mata pelajaran
+//--(bukan diisi id-nya lewat text-box)
+
 // API mata pelajaran
 Route::get('api/matpel/getall','MatapelajaranController@getAll');
-Route::get('api/matpel/getbyid','MatapelajaranController@getId');
+Route::get('api/matpel/getbyid/{id}','MatapelajaranController@getId');
 Route::get('api/matpel/getbyjenjang/{jenjang}','MatapelajaranController@getJenjang');
 Route::get('api/matpel/getbypelajaran/{pelajaran}','MatapelajaranController@getPelajaran');
 Route::get('api/matpel/getbytahunajaran/{thnajaran}','MatapelajaranController@getTahunAjaran');
 
 // API soal
-Route::get('api/soal/getbyid','SoalController@getId');
+Route::get('api/soal/getbyid/{id}','SoalController@getId');
 Route::get('api/soal/getbymatpelid/{matpelid}','SoalController@getMatpelId');
 Route::get('api/soal/getbyjenjang/{jenjang}','SoalController@getJenjang');
 Route::get('api/soal/getbypelajaran/{pelajaran}','SoalController@getPelajaran');

@@ -82,23 +82,23 @@
             </style>
         </script>
     </head>
-<body>
-  <div class="container">
-    <div class="row">
-        <div class="col-sm-6 col-md-4 col-md-offset-4">
-            <h1 class="text-center login-title">APLIKASI BANK SOAL</h1>
-            <div class="account-wall">
-                <img class="profile-img" src="{{ asset('gambar/photo.png') }}" size="50">
-                <form class="form-signin" method="POST" action="/auth/login">
-                {!! csrf_field() !!}
-                <input type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}" required autofocus><span class="clearfix"></span>
-                <input type="password" class="form-control" placeholder="Password" name="password" id="password">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">
-                    Sign in</button><span class="clearfix"></span>
-                </form>
+    <body>
+      <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-md-offset-4">
+                <h1 class="text-center login-title">APLIKASI BANK SOAL</h1>
+                <div class="account-wall">
+                    <img class="profile-img" src="{{ asset('gambar/photo.png') }}" size="50">
+                    <form class="form-signin" method="POST" action="/auth/login">
+                    {!! csrf_field() !!}
+                    <input type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}" required autofocus><span class="clearfix"></span>
+                    <input type="password" class="form-control" placeholder="Password" name="password" id="password">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">
+                        Sign in</button><span class="clearfix"></span>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</body>
+    </body>
 </html>

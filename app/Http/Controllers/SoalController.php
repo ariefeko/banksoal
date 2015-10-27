@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Soal;
 use App\Matapelajaran;
 use Input;
+use DB;
 use Response;
 
 class SoalController extends Controller
@@ -30,7 +31,8 @@ class SoalController extends Controller
      */
     public function create()
     {
-        return view('soal.create');
+        $data['listmatpel'] = Matapelajaran::select(DB::raw("id, CONCAT(pelajaran,' - ', jenjang) AS text"))->lists('text', 'id');
+        return view('soal.create',$data);
     }
 
     /**
@@ -68,7 +70,6 @@ class SoalController extends Controller
     public function show($id)
     {
         $soal = \DB::table('soal')->where('soal.id','=',$id)->get();
-
         $data['soal'] = $soal;
         $data['soal'] = Soal::find($id);
         return view('soal.show',$data);
@@ -83,6 +84,9 @@ class SoalController extends Controller
     public function edit($id)
     {
         $data['soal'] = Soal::find($id);
+        $data['listmatpel'] = Matapelajaran::select(DB::raw("id, CONCAT(pelajaran,' - ', jenjang) AS text"))->lists('text', 'id');
+        //return $data;
+        //die;
         return view('soal.edit',$data);
     }
 
@@ -128,7 +132,7 @@ class SoalController extends Controller
     /**
     * Create get API Soal
     */
-    public function getId()
+    public function getId($id)
     {
         $data = Soal::find($id);
         if(is_null($data))
@@ -228,6 +232,7 @@ class SoalController extends Controller
 
     public function ubah($id)
     {
+
         $soal = Soal::find($id);
 
         $filename = Input::file('gambar')->getClientOriginalName();

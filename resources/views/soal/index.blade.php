@@ -6,7 +6,7 @@
         <table class="table table-bordered">
             <tr>
                 <th>ID Soal</th>
-                <th>ID Mata Pelajaran</th>
+                <th>Mata Pelajaran</th>
                 <th>Pertanyaan</th>
                 <th>Pilihan A</th>
                 <th>Pilihan B</th>
@@ -20,9 +20,13 @@
             </tr>
             @foreach($soal as $n)
                 <tr>
+                    <?php
+                    $data = App\Matapelajaran::find($n->mata_pelajaran_id);
+                    $limit = str_limit($n->pertanyaan,30);
+                    ?>
                     <td>{{ $n->id }}</td>
-                    <td>{{ $n->mata_pelajaran_id }}</td>
-                    <td>{{ $n->pertanyaan }}</td>
+                    <td>{{ $data->pelajaran }} - {{ $data->jenjang }}</td>
+                    <td><?php echo $limit; ?></td>
                     <td>{{ $n->pilihan_a }}</td>
                     <td>{{ $n->pilihan_b }}</td>
                     <td>{{ $n->pilihan_c }}</td>
