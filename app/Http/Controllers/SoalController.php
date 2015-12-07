@@ -85,8 +85,8 @@ class SoalController extends Controller
     {
         $data['soal'] = Soal::find($id);
         $data['listmatpel'] = Matapelajaran::select(DB::raw("id, CONCAT(pelajaran,' - ', jenjang) AS text"))->lists('text', 'id');
-        //return $data;
-        //die;
+        return $data;
+        die;
         return view('soal.edit',$data);
     }
 
